@@ -99,6 +99,9 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       phone,
       email,
       budget,
+      configuration,
+      purchaseTimeline,
+homePurpose,
       source,
     });
 
@@ -239,8 +242,8 @@ const leadData = await parseResponse(
         email: email?.trim() || "",
         budget,
         configuration,
-         purchaseTimeline,
-  homePurpose,
+     purchaseTimeline,
+homePurpose,
         formType: source || "Enquiry form",
         project_name: "Infinium Harmony Villa",
       }),

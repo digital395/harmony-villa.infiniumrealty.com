@@ -197,6 +197,8 @@ const canSubmit =
       const leadData = {
           configuration,
         budget,
+        homePurpose,
+        purchaseTimeline,
         name: formData.name.trim(),
         phone: formData.phone,
         email: formData.email.trim(),

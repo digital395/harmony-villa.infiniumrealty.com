@@ -12,6 +12,7 @@ import LocationSection from "@/section/location";
 import CTA from "@/section/cta";
 import Stats from "@/section/stats";
 import { useEffect } from "react";
+import HomePopup from "@/components/home-popup";
 
 export default function HomePage() {
   useEffect(() => {
@@ -43,6 +44,7 @@ export default function HomePage() {
       <HarmonyFilmSection />
       <LocationSection />
       <CTA />
+      <HomePopup />
     </main>
   );
 }
