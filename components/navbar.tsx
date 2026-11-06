@@ -15,75 +15,75 @@ const navItems = [
 ];
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
-const easeSmooth = [0.22, 1, 0.36, 1] as const;
+// const easeSmooth = [0.22, 1, 0.36, 1] as const;
 
-const menuContainer = {
-  closed: {
-    opacity: 0,
-    height: 0,
-    transition: {
-      opacity: {
-        duration: 0.18,
-        ease: easeOut,
-      },
-      height: {
-        duration: 0.45,
-        ease: easeSmooth,
-      },
-    },
-  },
+// const menuContainer = {
+//   closed: {
+//     opacity: 0,
+//     height: 0,
+//     transition: {
+//       opacity: {
+//         duration: 0.18,
+//         ease: easeOut,
+//       },
+//       height: {
+//         duration: 0.45,
+//         ease: easeSmooth,
+//       },
+//     },
+//   },
 
-  open: {
-    opacity: 1,
-    height: "auto",
-    transition: {
-      height: {
-        duration: 0.5,
-        ease: easeSmooth,
-      },
-      opacity: {
-        duration: 0.25,
-        delay: 0.04,
-        ease: easeOut,
-      },
-    },
-  },
-};
+//   open: {
+//     opacity: 1,
+//     height: "auto",
+//     transition: {
+//       height: {
+//         duration: 0.5,
+//         ease: easeSmooth,
+//       },
+//       opacity: {
+//         duration: 0.25,
+//         delay: 0.04,
+//         ease: easeOut,
+//       },
+//     },
+//   },
+// };
 
-const menuContent = {
-  closed: {
-    y: -10,
-    opacity: 0,
-    scale: 0.985,
-  },
+// const menuContent = {
+//   closed: {
+//     y: -10,
+//     opacity: 0,
+//     scale: 0.985,
+//   },
 
-  open: {
-    y: 0,
-    opacity: 1,
-    scale: 1,
-    transition: {
-      duration: 0.42,
-      ease: easeOut,
-    },
-  },
-};
+//   open: {
+//     y: 0,
+//     opacity: 1,
+//     scale: 1,
+//     transition: {
+//       duration: 0.42,
+//       ease: easeOut,
+//     },
+//   },
+// };
 
-const mobileItem = {
-  closed: {
-    y: 12,
-    opacity: 0,
-  },
+// const mobileItem = {
+//   closed: {
+//     y: 12,
+//     opacity: 0,
+//   },
 
-  open: (index: number) => ({
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.38,
-      delay: 0.04 + index * 0.045,
-      ease: easeOut,
-    },
-  }),
-};
+//   open: (index: number) => ({
+//     y: 0,
+//     opacity: 1,
+//     transition: {
+//       duration: 0.38,
+//       delay: 0.04 + index * 0.045,
+//       ease: easeOut,
+//     },
+//   }),
+// };
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -129,13 +129,13 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4 lg:px-8 lg:pt-5">
+      <header className="fixed inset-x-0 top-0 z-50 px-0 pt-0 sm:px-5 sm:pt-4 lg:px-8 lg:pt-5">
         <motion.nav
           initial={false}
           animate={{
             backgroundColor: scrolled
               ? "rgba(255,255,255,0.78)"
-              : "rgba(255,255,255,0)",
+              : "rgba(255,255,255,255)",
             borderColor: scrolled
               ? "rgba(80,80,80,0.14)"
               : "rgba(255,255,255,0)",
@@ -147,14 +147,14 @@ export default function Navbar() {
             duration: 0.65,
             ease: easeOut,
           }}
-          className="
-            relative mx-auto w-full
-            rounded-2xl
-            border
-            backdrop-blur-xl
-            lg:max-w-345
-            lg:rounded-full
-          "
+        className="
+  relative mx-auto w-full
+  rounded-none
+  border
+  backdrop-blur-xl
+  lg:max-w-345
+  lg:rounded-full
+"
         >
           <div
             className="
@@ -185,7 +185,7 @@ export default function Navbar() {
                   height={40}
                   priority
                   className="
-                    h-10 w-auto object-contain
+                    h-15 w-auto object-contain
                     lg:h-20
                   "
                 />
@@ -207,11 +207,7 @@ export default function Navbar() {
                       font-normal
                       tracking-[0.01em]
                       transition-all duration-300
-                      ${
-                        scrolled
-                          ? "text-[#333333]/90 hover:bg-black/5 hover:text-[#222222]"
-                          : "text-white hover:text-white/70"
-                      }
+                           "text-[#333333]/90 hover:bg-black/5 hover:text-[#222222]"
                     `}
                   >
                     <motion.span
@@ -238,40 +234,121 @@ export default function Navbar() {
                   </Link>
                 ))}
 
-                <motion.button
-                  type="button"
-                  onClick={handleEnquireOpen}
-                  whileHover={{
-                    scale: 1.035,
-                  }}
-                  whileTap={{
-                    scale: 0.965,
-                  }}
-                  transition={{
-                    duration: 0.25,
-                    ease: easeOut,
-                  }}
-                  className={`
-                    ml-2
-                    rounded-full
-                    px-6 py-3
-                    text-[14px]
-                    font-medium
-                    tracking-[0.02em]
-                    transition-colors duration-300
-                    ${
-                      scrolled
-                        ? "bg-[#333333] text-white hover:bg-[#222222]"
-                        : "border border-white/70 bg-white/10 text-white backdrop-blur-sm hover:bg-white hover:text-[#333333]"
-                    }
-                  `}
-                >
-                  Enquire
-                </motion.button>
+<motion.button
+  type="button"
+  onClick={handleEnquireOpen}
+  whileHover="hover"
+  whileTap={{ scale: 0.97 }}
+  initial="rest"
+  animate="rest"
+  className="
+    group ml-2
+    flex items-center gap-3
+    rounded-full
+    border border-[#333333]/50
+    bg-transparent
+    px-5 py-2.5
+                      text-[16px]
+    font-medium
+    tracking-[0.03em]
+    text-[#333333]
+    shadow-[0_3px_14px_rgba(0,0,0,0.06)]
+    transition-all duration-300
+    hover:border-[#333333]
+    hover:bg-[#333333]
+    hover:text-white
+    hover:shadow-[0_6px_20px_rgba(0,0,0,0.12)]
+  "
+>
+  <span>Enquire Now</span>
+
+<motion.span
+  variants={{
+    rest: {
+      x: 0,
+      y: 0,
+    },
+    hover: {
+      x: 2,
+      y: -2,
+    },
+  }}
+  transition={{
+    duration: 0.25,
+    ease: easeOut,
+  }}
+  className="
+    flex h-6 w-6
+    items-center justify-center
+    rounded-full
+    border border-[#333333]/20
+    group-hover:border-white/30
+  "
+>
+  <svg
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-3.5 w-3.5"
+  >
+    <path
+      d="M3 13L13 3M5 3H13V11"
+      stroke="currentColor"
+      strokeWidth="1.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+</motion.span>
+</motion.button>
               </div>
             </div>
+<motion.a
+  href="tel:+919787000000"
+  whileHover={{ scale: 1.035 }}
+  whileTap={{ scale: 0.965 }}
+  transition={{
+    duration: 0.25,
+    ease: easeOut,
+  }}
+  className="
+    relative z-30
+    flex items-center gap-2
+    rounded-full
+    border border-[#555555]
+    bg-white
+    px-4 py-2.5
+    text-[13px]
+    font-medium
+    tracking-[0.02em]
+    text-[#444444]
+    shadow-[0_4px_14px_rgba(0,0,0,0.08)]
+    transition-all duration-300
+    hover:bg-[#444444]
+    hover:text-white
+    hover:shadow-[0_6px_18px_rgba(0,0,0,0.14)]
+    lg:hidden
+  "
+  aria-label="Call now"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    className="h-4 w-4"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M2.25 6.75c0-1.243 1.007-2.25 2.25-2.25h2.18c.967 0 1.81.62 2.114 1.537l.72 2.16a2.25 2.25 0 01-.516 2.28l-1.42 1.42a16.5 16.5 0 005.774 5.774l1.42-1.42a2.25 2.25 0 012.28-.516l2.16.72A2.25 2.25 0 0120.25 18v2.18c0 1.243-1.007 2.25-2.25 2.25C9.99 22.43 1.57 14.01 1.57 4.75"
+    />
+  </svg>
 
-            <motion.button
+  <span>Call Now</span>
+</motion.a>
+            {/* <motion.button
               type="button"
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
@@ -347,10 +424,10 @@ export default function Navbar() {
                   `}
                 />
               </span>
-            </motion.button>
+            </motion.button> */}
           </div>
 
-          <AnimatePresence initial={false}>
+          {/* <AnimatePresence initial={false}>
             {menuOpen && (
               <motion.div
                 variants={menuContainer}
@@ -488,7 +565,7 @@ export default function Navbar() {
                 </motion.div>
               </motion.div>
             )}
-          </AnimatePresence>
+          </AnimatePresence> */}
         </motion.nav>
       </header>
 

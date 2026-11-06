@@ -63,7 +63,7 @@ export default function CTA() {
             flex-col
             rounded-3xl
             border
-            border-black/[0.06]
+            border-black/6
             bg-white
             px-6
             py-7
@@ -96,13 +96,12 @@ export default function CTA() {
             <p
               className="
                 m-0
-                text-[11px]
+                text-[13px]
                 font-bold
                 leading-3.75
                 tracking-[0.04em]
                 text-[#333333]
-                sm:text-[12px]
-                lg:text-[13px]
+                lg:text-[16px]
               "
             >
               Find the home that fits your rhythm

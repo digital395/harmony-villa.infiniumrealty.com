@@ -452,24 +452,27 @@ export default function Hero() {
   return (
     <>
       <section
-        ref={sectionRef}
-        className="
-          relative
-          w-full
-          overflow-hidden
-          bg-[#e5e5e3]
-        "
-      >
+  ref={sectionRef}
+  className="
+    relative
+    w-full
+    overflow-hidden
+    bg-[#ffffff]
+    pt-20
+    pb-8
+    md:pt-0
+    md:pb-0
+  "
+>
         <div
-          className="
-            flex
-            min-h-screen
-            w-full
-            flex-col
-
-            lg:flex-row
-          "
-        >
+  className="
+    flex
+    w-full
+    flex-col
+    lg:min-h-screen
+    lg:flex-row
+  "
+>
           {/* LEFT CONTENT */}
 
           <div
@@ -478,40 +481,31 @@ export default function Hero() {
               w-full
               flex-col
               justify-center
-              bg-[#e5e5e3]
+              bg-[#ffffff]
               px-6
-              py-12
-
-              sm:px-10
-              sm:py-15
-
-              md:px-13.75
-              md:py-17.5
-
+              py-3
+order-2
+            
+ lg:order-1
               lg:h-screen
               lg:w-[50%]
               lg:px-[7vw]
               lg:py-0
             "
           >
-            <div className="w-full max-w-[620px]">
-
-              {/* LOCATION */}
+            <div className="w-full max-w-155">
 
               <p
                 ref={locationRef}
                 className="
                   mb-4
-                  text-[10px]
-                  font-medium
+                  text-[14px]
+                  font-semibold
                   leading-3.5
                   tracking-[0.8px]
                   text-[#3f3f3f]
-
-                  sm:text-[11px]
-
                   lg:mb-4.5
-                  lg:text-[13px]
+                  lg:text-[18px]
                   lg:leading-4.25
                 "
               >
@@ -527,22 +521,10 @@ export default function Hero() {
                 <span
                   className="
                     block
-                    text-[30px]
+                    text-[34px]
                     font-bold
-                    leading-8.5
-                    tracking-[-1.2px]
+                    leading-10
                     text-[#171717]
-
-                    sm:text-[38px]
-                    sm:leading-10.5
-
-                    md:text-[44px]
-                    md:leading-12
-
-                    lg:text-[54px]
-                    lg:leading-14
-                    lg:tracking-[-2px]
-
                     xl:text-[62px]
                     xl:leading-15.75
                   "
@@ -554,7 +536,7 @@ export default function Hero() {
                   className="
                     mt-2
                     block
-                    text-[30px]
+                    text-[34px]
                     font-bold
                     leading-8.5
                     tracking-[-1.2px]
@@ -570,7 +552,7 @@ export default function Hero() {
                     lg:leading-14
                     lg:tracking-[-2px]
 
-                    xl:text-[62px]
+                    xl:text-[64px]
                     xl:leading-15.75
                   "
                 >
@@ -585,10 +567,10 @@ export default function Hero() {
                 className="
                   mx-auto
                   mt-5
-                  max-w-[520px]
-                  text-[12px]
+                  max-w-full
+                  text-[14px]
                   font-normal
-                  leading-4.5
+                  leading-7
                   text-[#4f4f4f]
 
                   sm:mt-5
@@ -597,7 +579,7 @@ export default function Hero() {
 
                   lg:mx-0
                   lg:mt-5.5
-                  lg:max-w-[590px]
+                  lg:max-w-full
                   lg:text-[15px]
                   lg:leading-5.75
 
@@ -612,173 +594,276 @@ export default function Hero() {
 
               {/* PRICE */}
 
-              <div
-                ref={priceRef}
-                className="
-                  mt-6
-                  flex
-                  w-full
-                  justify-center
+<div
+  ref={priceRef}
+  className="
+    mt-6
+    flex
+    w-full
+    flex-row
+    items-stretch
+    gap-3
 
-                  lg:mt-7
-                  lg:justify-start
-                "
-              >
-                <div
-                  className="
-                    flex
-                    h-[82px]
-                    w-[165px]
-                    flex-col
-                    justify-center
-                    rounded-[9px]
-                    border
-                    border-[#bdbdb8]
-                    bg-white
-                    px-[12px]
-                    text-left
-                    shadow-[0_6px_20px_rgba(0,0,0,0.05)]
+    sm:gap-4
 
-                    sm:h-[88px]
-                    sm:w-[185px]
-                    sm:px-[14px]
+    lg:mt-7
+    lg:gap-5
 
-                    lg:h-[102px]
-                    lg:w-[220px]
-                    lg:rounded-[11px]
-                    lg:px-[17px]
+    xl:gap-6
+  "
+>
+  {/* 3 BHK */}
+  <div
+    className="
+      flex
+      min-w-0
+      flex-1
+      flex-col
+      justify-center
+      rounded-[9px]
+      border
+      border-[#bdbdb8]
+      bg-[#e5e5e3]
+      px-3
+      py-4
+      text-left
+      shadow-[0_6px_20px_rgba(0,0,0,0.05)]
 
-                    xl:h-[112px]
-                    xl:w-[235px]
-                  "
-                >
-                  <span
-                    className="
-                      text-[10px]
-                      leading-[14px]
-                      text-[#5f5f5f]
+      sm:h-22
+      sm:px-3.5
 
-                      sm:text-[12px]
-                      sm:leading-[16px]
+      lg:h-25.5
+      lg:rounded-[11px]
+      lg:px-4.25
 
-                      lg:text-[13px]
-                      lg:leading-[18px]
+      xl:h-28
+    "
+  >
+    <span
+      className="
+        text-[11px]
+        leading-3.5
+        text-[#5f5f5f]
 
-                      xl:text-[14px]
-                    "
-                  >
-                    3 BHK Villas from
-                  </span>
+        sm:text-[12px]
+        sm:leading-4
 
-                  <span
-                    className="
-                      mt-[3px]
-                      text-[22px]
-                      font-bold
-                      leading-[27px]
-                      tracking-[-0.5px]
-                      text-[#2f2f2f]
+        lg:text-[13px]
+        lg:leading-4.5
 
-                      sm:text-[27px]
-                      sm:leading-[31px]
+        xl:text-[14px]
+      "
+    >
+      3 BHK Villas from
+    </span>
 
-                      lg:text-[32px]
-                      lg:leading-[36px]
+    <span
+      className="
+        mt-1
+        whitespace-nowrap
+        text-[20px]
+        font-bold
+        leading-6.75
+        tracking-[-0.5px]
+        text-[#2f2f2f]
 
-                      xl:text-[35px]
-                    "
-                  >
-                    ₹3.2 Cr*
-                  </span>
-                </div>
-              </div>
+        sm:mt-2
+        sm:text-[27px]
+        sm:leading-7.75
+
+        lg:text-[32px]
+        lg:leading-9
+
+        xl:text-[35px]
+      "
+    >
+      ₹3.2 Cr*
+    </span>
+  </div>
+
+  {/* Row Villas */}
+  <div
+    className="
+      flex
+      min-w-0
+      flex-1
+      flex-col
+      justify-center
+      rounded-[9px]
+      border
+      border-[#bdbdb8]
+      bg-[#e5e5e3]
+      px-3
+      py-4
+      text-left
+      shadow-[0_6px_20px_rgba(0,0,0,0.05)]
+
+      sm:h-22
+      sm:px-3.5
+
+      lg:h-25.5
+      lg:rounded-[11px]
+      lg:px-4.25
+
+      xl:h-28
+    "
+  >
+    <span
+      className="
+        text-[11px]
+        leading-3.5
+        text-[#5f5f5f]
+
+        sm:text-[12px]
+        sm:leading-4
+
+        lg:text-[13px]
+        lg:leading-4.5
+
+        xl:text-[14px]
+      "
+    >
+      Row Villas from
+    </span>
+
+    <span
+      className="
+        mt-1
+        whitespace-nowrap
+        text-[20px]
+        font-bold
+        leading-6.75
+        tracking-[-0.5px]
+        text-[#2f2f2f]
+
+        sm:mt-2
+        sm:text-[27px]
+        sm:leading-7.75
+
+        lg:text-[32px]
+        lg:leading-9
+
+        xl:text-[35px]
+      "
+    >
+      ₹3.2 Cr*
+    </span>
+  </div>
+</div>
 
               {/* CTA */}
 
-              <div
-                ref={ctaRef}
-                className="
-                  mt-5
-                  flex
-                  justify-center
+<div
+  ref={ctaRef}
+  className="
+    mt-5
+    flex
+    w-full
+    justify-start
+    lg:mt-6
+  "
+>
+  <button
+    type="button"
+    onClick={() => setShowPopup(true)}
+    className="
+      h-11
+      w-full
+      rounded-[7px]
+      border
+      border-[#6b6b6b]
+      bg-transparent
+      px-5
+      text-[12px]
+      font-semibold
+      tracking-[0.5px]
+      text-[#5f5f5f]
+      transition-all
+      duration-300
 
-                  lg:mt-6
-                  lg:justify-start
-                "
-              >
-                <button
-                  type="button"
-                  onClick={() => setShowPopup(true)}
-                  className="
-                    h-[44px]
-                    rounded-[7px]
-                    bg-[#2f2f2f]
-                    px-[20px]
-                    text-[10px]
-                    font-semibold
-                    tracking-[0.5px]
-                    text-white
-                    transition-all
-                    duration-300
+      hover:-translate-y-0.5
+      hover:border-[#2f2f2f]
+      hover:bg-[#2f2f2f]
+      hover:text-white
+      hover:shadow-[0_8px_20px_rgba(0,0,0,0.12)]
 
-                    hover:-translate-y-[2px]
-                    hover:bg-[#171717]
-                    hover:shadow-[0_8px_20px_rgba(0,0,0,0.16)]
+      sm:h-11.5
+      sm:px-5.75
+      sm:text-[11px]
 
-                    sm:h-[46px]
-                    sm:px-[23px]
-                    sm:text-[11px]
-
-                    lg:h-[50px]
-                    lg:rounded-[8px]
-                    lg:px-[27px]
-                    lg:text-[12px]
-                  "
-                >
-                  BOOK A SITE VISIT
-                </button>
-              </div>
+      lg:h-12.5
+      lg:rounded-lg
+      lg:px-6.75
+      lg:text-[16px]
+    "
+  >
+    BOOK A SITE VISIT
+  </button>
+</div>
             </div>
           </div>
 
           {/* RIGHT IMAGE */}
 
-          <div
-            ref={imageWrapRef}
-            className="
-              relative
-              h-[50vh]
-              min-h-[330px]
-              w-full
-              overflow-hidden
+<div
+  ref={imageWrapRef}
+  className="
+    relative
+    h-[50vh]
+    min-h-20.5
+    max-h-70
+    w-full
+    overflow-hidden
+    px-4
+    pb-6
+order-1
+    sm:min-h-100
 
-              sm:h-[56vh]
-              sm:min-h-[400px]
+lg:order-2
+    md:h-[60vh]
+    md:px-8
+    md:pb-10
 
-              md:h-[60vh]
+    lg:absolute
+    lg:right-0
+    lg:top-0
+    lg:h-screen
+    lg:w-[50%]
+    lg:min-h-0
+    lg:max-h-full
+    lg:overflow-hidden
+    lg:px-0
+    lg:pb-0
+  "
+>
+  <div
+    className="
+      relative
+      h-full
+      w-full
+      overflow-hidden
+      rounded-[18px]
 
-              lg:absolute
-              lg:right-0
-              lg:top-0
-              lg:h-screen
-              lg:w-[50%]
-              lg:min-h-0
-            "
-          >
-            <Image
-              ref={imageRef}
-              src="/images/hero.webp"
-              alt="Harmony residential community"
-              fill
-              priority
-              sizes="(max-width: 1023px) 100vw, 50vw"
-              className="
-                object-cover
-                object-center
-                will-change-transform
-              "
-            />
-          </div>
+      sm:rounded-[22px]
+
+      lg:rounded-none
+    "
+  >
+    <Image
+      ref={imageRef}
+      src="/images/hero.webp"
+      alt="Harmony residential community"
+      fill
+      priority
+      sizes="(max-width: 1023px) 100vw, 50vw"
+      className="
+        object-cover
+        object-center
+        will-change-transform
+      "
+    />
+  </div>
+</div>
         </div>
       </section>
 

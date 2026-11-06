@@ -11,9 +11,14 @@ import {
 } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
+const easeInOut = [0.42, 0, 0.58, 1] as const;
+
 function CountUp({ value }: { value: string }) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const isInView = useInView(ref, {
+    once: true,
+    amount: 0.5,
+  });
 
   const numericValue = parseFloat(value);
   const suffix = value.replace(/[0-9.]/g, "");
@@ -81,19 +86,20 @@ const stats = [
   },
 ];
 
-const easeInOut = [0.42, 0, 0.58, 1] as const;
-
 export default function AboutHarmony() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const handleBrochureClick = () => {
     if (isLeadValid()) {
       const link = document.createElement("a");
+
       link.href = "/brochure.pdf";
       link.download = "Harmony-Brochure.pdf";
+
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+
       return;
     }
 
@@ -101,259 +107,258 @@ export default function AboutHarmony() {
   };
 
   return (
-    <section className="w-full bg-[#e5e5e5]" id="about">
-      <div
+    <>
+<section id="about" className="w-full bg-white">
+  <div
+    className="
+      mx-auto
+      flex
+      w-full
+      justify-center
+      px-5
+      py-8
+      lg:px-12
+      lg:py-10
+    "
+  >
+    <motion.div
+      className="
+        flex
+        w-full
+        max-w-5xl
+        flex-col
+        items-center
+        text-center
+      "
+      initial={{ opacity: 0, y: 25 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{
+        once: true,
+        amount: 0.25,
+      }}
+      transition={{
+        duration: 0.7,
+        ease: easeInOut,
+      }}
+    >
+      {/* ================= TITLE ================= */}
+      <motion.p
         className="
-          mx-auto
-          w-full
-          max-w-7xl
-          px-6
-          py-10.5
-          sm:px-10
-          sm:py-12.5
-          lg:px-12.5
-          lg:py-10.75
+          m-0
+          text-[13px]
+          font-semibold
+          uppercase
+          leading-5
+          tracking-[0.08em]
+          text-[#333333]
+          sm:text-[18px]
+          sm:normal-case
+          sm:tracking-[-0.01em]
         "
+        initial={{
+          opacity: 0,
+          y: 10,
+        }}
+        whileInView={{
+          opacity: 1,
+          y: 0,
+        }}
+        viewport={{
+          once: true,
+        }}
+        transition={{
+          duration: 0.5,
+          ease: easeInOut,
+        }}
       >
-        {/* ================= TITLE ================= */}
-        <motion.div
-          className="flex flex-col items-center text-center"
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{
-            duration: 0.7,
-            ease: easeInOut,
-          }}
-        >
-          <motion.p
-            className="
-              m-0
-              text-[11px]
-              font-semibold
-              leading-3.5
-              text-[#333333]
-              sm:text-[18px]
-            "
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{
-              duration: 0.5,
-              ease: easeInOut,
-            }}
-          >
-            About Infinium Harmony Coimbatore
-          </motion.p>
+        About Infinium Harmony Coimbatore
+      </motion.p>
 
-          {/* Small divider */}
-          <motion.div
-            className="
-              mt-1.75
-              h-px
-              bg-[#666666]
-            "
-            initial={{ width: 0 }}
-            whileInView={{ width: 42 }}
-            viewport={{ once: true }}
-            transition={{
-              duration: 0.6,
-              delay: 0.15,
-              ease: easeInOut,
-            }}
-          />
+      {/* ================= DIVIDER ================= */}
+      <motion.div
+        className="
+          mt-3
+          h-px
+          bg-[#666666]
+        "
+        initial={{
+          width: 0,
+        }}
+        whileInView={{
+          width: 44,
+        }}
+        viewport={{
+          once: true,
+        }}
+        transition={{
+          duration: 0.6,
+          delay: 0.15,
+          ease: easeInOut,
+        }}
+      />
 
-          {/* ================= DESCRIPTION ================= */}
-          <motion.div
-            className="
-              mt-2.5
-              max-w-225
-              text-[15px]
-              font-normal
-              leading-[1.65]
-              text-[#222222]
-              sm:text-[16px]
-              sm:leading-[1.75]
-              lg:text-[20px]
-            "
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{
-              duration: 0.7,
-              delay: 0.2,
-              ease: easeInOut,
-            }}
-          >
-            {/* <p className="m-0">
-              Discover an elevated lifestyle at Infinium Harmony, a thoughtfully
-              planned residential villa development in Coimbatore.
-            </p> */}
-
-            <p className="m-0 mt-0.75">
-               Discover an elevated lifestyle at Infinium Harmony, a thoughtfully
-              planned residential villa development in Coimbatore.
-              Designed for those who value privacy, comfort and independent
-              living, the project offers beautifully planned villas that
-              {/* <br className="hidden lg:block" /> */}
-              bring together spacious interiors, contemporary architecture and a
-              peaceful residential environment.
-            </p>
-          </motion.div>
-
-          {/* ================= BOOKING MESSAGE ================= */}
-          <motion.p
-            className="
-              mt-8
-              max-w-155
-              text-center
-              text-[15px]
-              font-bold
-              leading-[1.55]
-              text-[#222222]
-              sm:text-[20px]
-              lg:mt-7.75
-            "
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{
-              duration: 0.7,
-              delay: 0.3,
-              ease: easeInOut,
-            }}
-          >
-            Bookings are now open! Explore a home where comfort,
-            <br className="hidden sm:block" />
-            convenience and harmonious living come together.
-          </motion.p>
-
-          {/* ================= CTA ================= */}
-          <motion.button
-            type="button"
-            onClick={handleBrochureClick}
-            className="
-              mt-5.25
-              flex
-              h-9.5
-              items-center
-              justify-center
-              rounded-[7px]
-              bg-[#333333]
-              px-3.25
-              text-[16px]
-              font-semibold
-              leading-none
-              text-white
-              focus:outline-none
-              focus:ring-2
-              focus:ring-[#666666]
-              focus:ring-offset-2
-              focus:ring-offset-[#e5e5e5]
-              sm:h-15
-              sm:px-5
-            "
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{
-              duration: 0.6,
-              delay: 0.4,
-              ease: easeInOut,
-            }}
-            whileHover={{
-              scale: 1.04,
-              backgroundColor: "#222222",
-            }}
-            whileTap={{ scale: 0.97 }}
-          >
-            DOWNLOAD BROCHURE
-          </motion.button>
-        </motion.div>
-
-        {/* ================= STATS ================= */}
-{/* ================= STATS ================= */}
+      {/* ================= DESCRIPTION ================= */}
 <motion.div
   className="
     mx-auto
-    mt-7.75
-    grid
+    mt-6
     w-full
-    max-w-195
-    grid-cols-2
-    gap-y-6
-    sm:grid-cols-4
-    sm:gap-x-10
-    sm:gap-y-0
-    lg:mt-7.5
-    lg:gap-x-16
-    xl:gap-x-20
+    max-w-4xl
+    px-1
+    text-justify
+    text-[14px]
+    font-normal
+    leading-[1.7]
+    text-[#222222]
+    sm:mt-7
+    sm:px-0
+    sm:text-center
+    sm:text-[16px]
+    sm:leading-[1.8]
+    lg:text-[19px]
+    lg:leading-[1.85]
   "
-  initial="hidden"
-  whileInView="visible"
-  viewport={{ once: true, amount: 0.25 }}
-  variants={{
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.12,
-      },
-    },
+  initial={{
+    opacity: 0,
+    y: 20,
+  }}
+  whileInView={{
+    opacity: 1,
+    y: 0,
+  }}
+  viewport={{
+    once: true,
+    amount: 0.3,
+  }}
+  transition={{
+    duration: 0.7,
+    delay: 0.2,
+    ease: easeInOut,
   }}
 >
-  {stats.map((stat) => (
-    <motion.div
-      key={stat.label}
-      className="
-        flex
-        flex-col
-        items-center
-        justify-center
-        text-center
-      "
-      variants={{
-        hidden: {
+  <p className="m-0">
+    Discover an elevated lifestyle at Infinium Harmony, a thoughtfully
+    planned residential villa development in Coimbatore. Designed for
+    those who value privacy, comfort and independent living, the project
+    offers beautifully planned villas that bring together spacious
+    interiors, contemporary architecture and a peaceful residential
+    environment.
+  </p>
+</motion.div>
+
+      {/* ================= BOOKING MESSAGE ================= */}
+      <motion.div
+        className="
+          mx-auto
+          mt-8
+          max-w-2xl
+          sm:mt-10
+        "
+        initial={{
           opacity: 0,
-          y: 25,
-        },
-        visible: {
+          y: 20,
+        }}
+        whileInView={{
           opacity: 1,
           y: 0,
-          transition: {
-            duration: 0.6,
-            ease: easeInOut,
-          },
-        },
-      }}
-      whileHover={{ y: -4 }}
-    >
-      <CountUp value={stat.value} />
-
-      <div
-        className="
-          mt-1
-          whitespace-nowrap
-          text-[14px]
-          font-normal
-          leading-4.5
-          text-[#333333]
-          sm:text-[20px]
-          sm:leading-5
-        "
+        }}
+        viewport={{
+          once: true,
+          amount: 0.3,
+        }}
+        transition={{
+          duration: 0.7,
+          delay: 0.3,
+          ease: easeInOut,
+        }}
       >
-        {stat.label}
-      </div>
+        <p
+          className="
+            m-0
+            text-center
+            text-[14px]
+            font-bold
+            leading-[1.6]
+            text-[#222222]
+            sm:text-[19px]
+            sm:leading-[1.65]
+            lg:text-[20px]
+          "
+        >
+          Bookings are now open! Explore a home where comfort,
+          convenience and harmonious living come together.
+        </p>
+      </motion.div>
+
+      {/* ================= CTA ================= */}
+      <motion.button
+        type="button"
+        onClick={handleBrochureClick}
+        className="
+          mt-7
+          flex
+          h-10
+          items-center
+          justify-center
+          rounded-[5px]
+          bg-[#333333]
+          px-5
+          text-[12px]
+          font-semibold
+          leading-none
+          tracking-[0.08em]
+          text-white
+          shadow-[0_4px_14px_rgba(0,0,0,0.08)]
+          transition-all
+          duration-300
+          focus:outline-none
+          focus:ring-2
+          focus:ring-[#666666]
+          focus:ring-offset-2
+          focus:ring-offset-white
+          sm:mt-8
+          sm:h-12
+          sm:px-7
+          sm:text-[14px]
+          lg:h-13
+        "
+        initial={{
+          opacity: 0,
+          y: 15,
+        }}
+        whileInView={{
+          opacity: 1,
+          y: 0,
+        }}
+        viewport={{
+          once: true,
+        }}
+        transition={{
+          duration: 0.6,
+          delay: 0.4,
+          ease: easeInOut,
+        }}
+        whileHover={{
+          scale: 1.035,
+          backgroundColor: "#222222",
+          boxShadow: "0 8px 22px rgba(0,0,0,0.12)",
+        }}
+        whileTap={{
+          scale: 0.97,
+        }}
+      >
+        DOWNLOAD BROCHURE
+      </motion.button>
     </motion.div>
-  ))}
-</motion.div>
-</div>
-      {/* ================= POPUP ================= */}
+  </div>
+</section>
+
       <Popup
         isOpen={isPopupOpen}
         onClose={() => setIsPopupOpen(false)}
         title="Download Brochure"
         download={true}
       />
-    </section>
+    </>
   );
 }

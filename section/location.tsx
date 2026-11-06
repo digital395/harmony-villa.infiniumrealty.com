@@ -201,14 +201,11 @@ export default function Location() {
       id="locations"
       className="
         w-full
-        bg-[#e5e5e3]
-        px-3
-        pt-3
-        pb-6
-
-        sm:px-4
-        sm:pt-4
-        sm:pb-10
+        bg-[#ffffff]
+           px-5
+      py-8
+      lg:px-12
+      lg:py-10
       "
     >
       <motion.div
@@ -238,12 +235,12 @@ export default function Location() {
             <p
               className="
                 m-0
-                text-[10px]
-                font-bold
+                text-[14px]
+                font-semibold
                 leading-3.5
                 text-[#2f2f2f]
 
-                sm:text-[11px]
+                sm:text-[16px]
               "
             >
               LOCATION

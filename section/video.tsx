@@ -117,17 +117,11 @@ export default function HarmonyFilmSection() {
             w-full
             flex-col
             items-center
-            px-5
-            pb-4.5
-            pt-9
+    px-5
+      py-8
+      lg:px-12
+      lg:py-10
             text-center
-
-            sm:px-7.5
-            sm:pb-5.5
-            sm:pt-10
-
-            lg:pb-5.5
-            lg:pt-9.25
           "
         >
           <motion.div
@@ -137,12 +131,12 @@ export default function HarmonyFilmSection() {
             <p
               className="
                 m-0
-                text-[10px]
-                font-bold
+                text-[14px]
+                font-semibold
                 leading-3.5
                 text-[#2f2f2f]
 
-                sm:text-[11px]
+                sm:text-[15px]
                 sm:leading-3.75
               "
             >
@@ -278,7 +272,7 @@ export default function HarmonyFilmSection() {
               rounded-[7px]
               bg-[#2f2f2f]
               px-3.25
-              text-[10px]
+              text-[13px]
               font-semibold
               leading-none
               text-white

@@ -5,13 +5,29 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { saveLeadVerification } from "@/utils/LeadVerification";
 
+type Configuration =
+  | "3 BHK Row Villa"
+  | "3 BHK Individual Villa"
+  | "4 BHK Individual Villa"
+  | "";
+
 type Budget =
   | "Up to ₹1.5 Cr"
   | "₹1.5 – 3 Cr"
   | "₹3 – 4.5 Cr"
   | "Above ₹4.5 Cr"
   | "";
+type PurchaseTimeline =
+  | "Within 1 month"
+  | "1 – 3 months"
+  | "3 – 6 months"
+  | "Just exploring"
+  | "";
 
+type HomePurpose =
+  | "Self-use"
+  | "Investment"
+  | "";
 type EnquiryFormProps = {
   title: string;
   download: boolean;
@@ -38,8 +54,15 @@ export default function EnquiryForm({
   const router = useRouter();
 
   const [step, setStep] = useState<1 | 2>(1);
-  const [budget, setBudget] = useState<Budget>("");
+const [configuration, setConfiguration] =
+  useState<Configuration>("");
 
+const [budget, setBudget] = useState<Budget>("");
+const [purchaseTimeline, setPurchaseTimeline] =
+  useState<PurchaseTimeline>("");
+
+const [homePurpose, setHomePurpose] =
+  useState<HomePurpose>("");
   const [formData, setFormData] = useState<FormData>({
     name: "",
     phone: "",
@@ -68,6 +91,8 @@ const canSubmit =
   isNameValid &&
   isPhoneValid &&
   isEmailValid &&
+  !!purchaseTimeline &&
+  !!homePurpose &&
   !isSubmitting;
 
   const handleNameChange = (
@@ -120,10 +145,10 @@ const canSubmit =
     }));
   };
 
-  const handleContinue = () => {
-    if (!budget) return;
-    setStep(2);
-  };
+ const handleContinue = () => {
+  if (!configuration || !budget) return;
+  setStep(2);
+};
 
   const validateForm = () => {
     const newErrors: Errors = {
@@ -170,6 +195,7 @@ const canSubmit =
 
     try {
       const leadData = {
+          configuration,
         budget,
         name: formData.name.trim(),
         phone: formData.phone,
@@ -307,365 +333,495 @@ const canSubmit =
       </div>
 
       <AnimatePresence mode="wait">
-        {step === 1 && (
-          <motion.div
-            key="step-one"
-            initial={{ opacity: 0, x: -18 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 18 }}
-            transition={{
-              duration: 0.35,
-              ease: "easeInOut",
-            }}
-            className="mt-8"
-          >
-            <div className="text-center">
-              <h3 className="m-0 text-[18px] font-semibold text-[#333333]">
-                What is your budget?
-              </h3>
+       {step === 1 && (
+  <motion.div
+    key="step-one"
+    initial={{ opacity: 0, x: -18 }}
+    animate={{ opacity: 1, x: 0 }}
+    exit={{ opacity: 0, x: 18 }}
+    transition={{
+      duration: 0.35,
+      ease: "easeInOut",
+    }}
+    className="mt-7"
+  >
+    {/* Villa Configuration */}
+    <div>
+      <h3 className="m-0 text-[18px] font-semibold text-[#333333]">
+        Which villa configuration are you looking for?
+      </h3>
 
-              <p className="mt-2 text-[13px] leading-5 text-[#666666]">
-                Select the budget range that works best for you.
-              </p>
-            </div>
+      <div className="mt-4 flex flex-wrap gap-2.5">
+        {(
+          [
+            "3 BHK Row Villa",
+            "3 BHK Individual Villa",
+            "4 BHK Individual Villa",
+          ] as const
+        ).map((item) => {
+          const selected = configuration === item;
 
-            <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {(
-                [
-                  "Up to ₹1.5 Cr",
-                  "₹1.5 – 3 Cr",
-                  "₹3 – 4.5 Cr",
-                  "Above ₹4.5 Cr",
-                ] as const
-              ).map((item) => {
-                const selected = budget === item;
+          return (
+            <button
+              key={item}
+              type="button"
+              onClick={() => setConfiguration(item)}
+              className={`
+                relative
+                flex
+                min-h-12
+                items-center
+                justify-center
+                rounded-full
+                border
+                px-4
+                text-[13px]
+                font-medium
+                transition-all
+                duration-200
+                ${
+                  selected
+                    ? "border-[#333333] bg-[#333333] text-white shadow-[0_5px_15px_rgba(0,0,0,0.14)]"
+                    : "border-[#d4d4d4] bg-white text-[#333333] hover:border-[#666666] hover:bg-[#eeeeee]"
+                }
+              `}
+            >
+              {item}
+            </button>
+          );
+        })}
+      </div>
+    </div>
 
-                return (
-                  <button
-                    key={item}
-                    type="button"
-                    onClick={() => setBudget(item)}
-                    className={`
-                      group
-                      relative
-                      flex
-                      min-h-14.5
-                      items-center
-                      justify-center
-                      rounded-xl
-                      border
-                      px-4
-                      text-[13px]
-                      font-medium
-                      transition-all
-                      duration-200
-                      ${
-                        selected
-                          ? "border-[#333333] bg-[#333333] text-white shadow-[0_7px_20px_rgba(0,0,0,0.16)]"
-                          : "border-[#d4d4d4] bg-white text-[#333333] hover:border-[#666666] hover:bg-[#eeeeee] hover:text-[#222222]"
-                      }
-                    `}
-                  >
-                    {selected && (
-                      <span className="absolute right-3 top-3 flex h-4 w-4 items-center justify-center rounded-full bg-white/20 text-[9px] text-white">
-                        ✓
-                      </span>
-                    )}
+    {/* Budget */}
+    <div className="mt-6">
+      <h3 className="m-0 text-[18px] font-semibold text-[#333333]">
+        Your budget
+      </h3>
 
-                    {item}
-                  </button>
-                );
-              })}
-            </div>
+      <div className="mt-4 flex flex-wrap gap-2.5">
+        {(
+          [
+            "Up to ₹1.5 Cr",
+            "₹1.5 – 3 Cr",
+            "₹3 – 4.5 Cr",
+            "Above ₹4.5 Cr",
+          ] as const
+        ).map((item) => {
+          const selected = budget === item;
 
-            <div className="mt-7 flex justify-center">
-              <motion.button
-                type="button"
-                disabled={!budget}
-                onClick={handleContinue}
-                whileHover={budget ? { scale: 1.02 } : {}}
-                whileTap={budget ? { scale: 0.98 } : {}}
-                className="
-                  flex
-                  h-11.5
-                  min-w-37.5
-                  items-center
-                  justify-center
-                  rounded-[10px]
-                  bg-[#333333]
-                  px-7
-                  text-[11px]
-                  font-bold
-                  tracking-[0.08em]
-                  text-white
-                  shadow-[0_6px_18px_rgba(0,0,0,0.16)]
-                  transition-all
-                  duration-200
-                  hover:bg-[#222222]
-                  disabled:cursor-not-allowed
-                  disabled:bg-[#d4d4d4]
-                  disabled:text-[#777777]
-                  disabled:shadow-none
-                "
-              >
-                CONTINUE
-              </motion.button>
-            </div>
-          </motion.div>
-        )}
+          return (
+            <button
+              key={item}
+              type="button"
+              onClick={() => setBudget(item)}
+              className={`
+                relative
+                flex
+                min-h-12
+                items-center
+                justify-center
+                rounded-full
+                border
+                px-4
+                text-[13px]
+                font-medium
+                transition-all
+                duration-200
+                ${
+                  selected
+                    ? "border-[#333333] bg-[#333333] text-white shadow-[0_5px_15px_rgba(0,0,0,0.14)]"
+                    : "border-[#d4d4d4] bg-white text-[#333333] hover:border-[#666666] hover:bg-[#eeeeee]"
+                }
+              `}
+            >
+              {item}
+            </button>
+          );
+        })}
+      </div>
+    </div>
 
-        {step === 2 && (
-          <motion.div
-            key="step-two"
-            initial={{ opacity: 0, x: 18 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -18 }}
-            transition={{
-              duration: 0.35,
-              ease: "easeInOut",
-            }}
-            className="mt-8"
-          >
-            <div className="text-center">
-              <h3 className="m-0 text-[18px] font-semibold text-[#333333]">
-                Tell us about yourself
-              </h3>
+    {/* Continue */}
+    <div className="mt-6 flex justify-center">
+      <motion.button
+        type="button"
+        disabled={!configuration || !budget}
+        onClick={handleContinue}
+        whileHover={
+          configuration && budget ? { scale: 1.02 } : {}
+        }
+        whileTap={
+          configuration && budget ? { scale: 0.98 } : {}
+        }
+        className="
+          flex
+          h-11.5
+          w-full
+          items-center
+          justify-center
+          rounded-[10px]
+          bg-[#333333]
+          px-7
+          text-[11px]
+          font-bold
+          tracking-[0.08em]
+          text-white
+          shadow-[0_6px_18px_rgba(0,0,0,0.16)]
+          transition-all
+          duration-200
+          hover:bg-[#222222]
+          disabled:cursor-not-allowed
+          disabled:bg-[#d4d4d4]
+          disabled:text-[#777777]
+          disabled:shadow-none
+        "
+      >
+        CONTINUE
+      </motion.button>
+    </div>
+  </motion.div>
+)}
 
-              <p className="mt-2 text-[13px] leading-5 text-[#666666]">
-                Enter your details and our team will get in touch with you.
-              </p>
-            </div>
+{step === 2 && (
+  <motion.div
+    key="step-two"
+    initial={{ opacity: 0, x: 18 }}
+    animate={{ opacity: 1, x: 0 }}
+    exit={{ opacity: 0, x: -18 }}
+    transition={{
+      duration: 0.35,
+      ease: "easeInOut",
+    }}
+    className="mt-8"
+  >
+    <div className="mx-auto w-full">
+      <div className="text-center">
+        <h3 className="m-0 text-[18px] font-semibold text-[#333333]">
+          Tell us about yourself
+        </h3>
 
-            <div className="mx-auto mt-6 flex w-full max-w-115 flex-col gap-4">
-              <div>
-                <label
-                  htmlFor="enquiry-name"
-                  className="mb-1.5 block text-left text-[12px] font-semibold text-[#444444]"
-                >
-                  Full Name
-                </label>
+        <p className="mt-2 text-[13px] leading-5 text-[#666666]">
+          Enter your details and our team will get in touch with you.
+        </p>
+      </div>
 
-                <input
-                  id="enquiry-name"
-                  name="name"
-                  type="text"
-                  value={formData.name}
-                  onChange={handleNameChange}
-                  placeholder="Enter your full name"
-                  autoComplete="name"
-                  className={`
-                    h-12
-                    w-full
-                    rounded-[10px]
-                    border
-                    bg-[#fafafa]
-                    px-4
-                    text-[13px]
-                    text-[#333333]
-                    outline-none
-                    transition-all
-                    placeholder:text-[#999999]
-                    focus:bg-white
-                    focus:ring-2
-                    focus:ring-[#666666]/10
-                    ${
-                      errors.name
-                        ? "border-red-400"
-                        : "border-[#d4d4d4] focus:border-[#666666]"
-                    }
-                  `}
-                />
+      {/* Purchase Timeline */}
+      <div className="mt-6">
+        <h4 className="m-0 text-[18px] font-semibold text-[#333333]">
+          When are you planning to buy?
+        </h4>
 
-                {errors.name && (
-                  <p className="mt-1 text-left text-[11px] text-red-500">
-                    {errors.name}
-                  </p>
-                )}
-              </div>
+        <div className="mt-3 flex flex-wrap gap-2.5">
+          {(
+            [
+              "Within 1 month",
+              "1 – 3 months",
+              "3 – 6 months",
+              "Just exploring",
+            ] as const
+          ).map((item) => {
+            const selected = purchaseTimeline === item;
 
-              <div>
-                <label
-                  htmlFor="enquiry-phone"
-                  className="mb-1.5 block text-left text-[12px] font-semibold text-[#444444]"
-                >
-                  Mobile Number
-                </label>
-
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[13px] font-medium text-[#666666]">
-                    +91
-                  </span>
-
-                  <input
-                    id="enquiry-phone"
-                    name="phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={handlePhoneChange}
-                    placeholder="10-digit mobile number"
-                    autoComplete="tel"
-                    inputMode="numeric"
-                    maxLength={10}
-                    className={`
-                      h-12
-                      w-full
-                      rounded-[10px]
-                      border
-                      bg-[#fafafa]
-                      pl-12.5
-                      pr-4
-                      text-[13px]
-                      text-[#333333]
-                      outline-none
-                      transition-all
-                      placeholder:text-[#999999]
-                      focus:bg-white
-                      focus:ring-2
-                      focus:ring-[#666666]/10
-                      ${
-                        errors.phone
-                          ? "border-red-400"
-                          : "border-[#d4d4d4] focus:border-[#666666]"
-                      }
-                    `}
-                  />
-                </div>
-
-                {errors.phone && (
-                  <p className="mt-1 text-left text-[11px] text-red-500">
-                    {errors.phone}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label
-                  htmlFor="enquiry-email"
-                  className="mb-1.5 block text-left text-[12px] font-semibold text-[#444444]"
-                >
-                  Email Address
-                  <span className="ml-1 font-normal text-[#999999]">
-                    (Optional)
-                  </span>
-                </label>
-
-                <input
-                  id="enquiry-email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleEmailChange}
-                  placeholder="Enter your email address"
-                  autoComplete="email"
-                  className={`
-                    h-12
-                    w-full
-                    rounded-[10px]
-                    border
-                    bg-[#fafafa]
-                    px-4
-                    text-[13px]
-                    text-[#333333]
-                    outline-none
-                    transition-all
-                    placeholder:text-[#999999]
-                    focus:bg-white
-                    focus:ring-2
-                    focus:ring-[#666666]/10
-                    ${
-                      errors.email
-                        ? "border-red-400"
-                        : "border-[#d4d4d4] focus:border-[#666666]"
-                    }
-                  `}
-                />
-
-                {errors.email && (
-                  <p className="mt-1 text-left text-[11px] text-red-500">
-                    {errors.email}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <div className="mt-7 flex justify-center gap-3">
+            return (
               <button
+                key={item}
                 type="button"
-                disabled={isSubmitting}
-                onClick={() => setStep(1)}
-                className="
+                onClick={() => setPurchaseTimeline(item)}
+                className={`
                   flex
-                  h-11.5
-                  min-w-25
+                  min-h-12
                   items-center
                   justify-center
-                  rounded-[10px]
+                  rounded-full
                   border
-                  border-[#333333]
-                  bg-white
                   px-5
-                  text-[11px]
-                  font-bold
-                  tracking-[0.08em]
-                  text-[#333333]
+                  text-[13px]
+                  font-medium
                   transition-all
                   duration-200
-                  hover:bg-[#eeeeee]
-                  disabled:cursor-not-allowed
-                  disabled:opacity-50
-                "
+                  ${
+                    selected
+                      ? "border-[#333333] bg-[#333333] text-white shadow-[0_5px_15px_rgba(0,0,0,0.14)]"
+                      : "border-[#d4d4d4] bg-white text-[#333333] hover:border-[#666666] hover:bg-[#eeeeee]"
+                  }
+                `}
               >
-                BACK
+                {item}
               </button>
+            );
+          })}
+        </div>
+      </div>
 
-              <motion.button
+      {/* Home Purpose */}
+      <div className="mt-6">
+        <h4 className="m-0 text-[18px] font-semibold text-[#333333]">
+          This home is for
+        </h4>
+
+        <div className="mt-3 flex flex-wrap gap-2.5">
+          {(["Self-use", "Investment"] as const).map((item) => {
+            const selected = homePurpose === item;
+
+            return (
+              <button
+                key={item}
                 type="button"
-                disabled={!canSubmit}
-                onClick={handleSubmit}
-                whileHover={canSubmit ? { scale: 1.02 } : {}}
-                whileTap={canSubmit ? { scale: 0.98 } : {}}
-                className="
+                onClick={() => setHomePurpose(item)}
+                className={`
                   flex
-                  h-11.5
-                  min-w-37.5
+                  min-h-12
                   items-center
                   justify-center
-                  rounded-[10px]
-                  bg-[#333333]
-                  px-6
-                  text-[11px]
-                  font-bold
-                  tracking-[0.08em]
-                  text-white
-                  shadow-[0_6px_18px_rgba(0,0,0,0.16)]
+                  rounded-full
+                  border
+                  px-5
+                  text-[13px]
+                  font-medium
                   transition-all
                   duration-200
-                  hover:bg-[#222222]
-                  disabled:cursor-not-allowed
-                  disabled:bg-[#d4d4d4]
-                  disabled:text-[#777777]
-                  disabled:shadow-none
-                "
+                  ${
+                    selected
+                      ? "border-[#333333] bg-[#333333] text-white shadow-[0_5px_15px_rgba(0,0,0,0.14)]"
+                      : "border-[#d4d4d4] bg-white text-[#333333] hover:border-[#666666] hover:bg-[#eeeeee]"
+                  }
+                `}
               >
-                {isSubmitting
-                  ? "SUBMITTING..."
-                  : download
-                    ? "SUBMIT & DOWNLOAD"
-                    : "SUBMIT"}
-              </motion.button>
-            </div>
+                {item}
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
-            <div className="mt-5 text-center">
-              <p className="text-[10px] uppercase tracking-[0.08em] text-[#999999]">
-                Selected budget
-              </p>
+      {/* Name / Phone / Email */}
+      <div className="mt-6 grid w-full grid-cols-1 gap-4 sm:grid-cols-2">
 
-              <p className="mt-1 text-[12px] font-semibold text-[#333333]">
-                {budget}
-              </p>
-            </div>
-          </motion.div>
-        )}
+        {/* Full Name */}
+        <div>
+          <label
+            htmlFor="enquiry-name"
+            className="mb-1.5 block text-left text-[18px] font-semibold text-[#444444]"
+          >
+            Full Name
+          </label>
+
+          <input
+            id="enquiry-name"
+            name="name"
+            type="text"
+            value={formData.name}
+            onChange={handleNameChange}
+            placeholder="Enter your full name"
+            autoComplete="name"
+            className={`
+              h-12
+              w-full
+              rounded-[10px]
+              border
+              bg-[#fafafa]
+              px-4
+              text-[13px]
+              text-[#333333]
+              outline-none
+              transition-all
+              placeholder:text-[#999999]
+              focus:bg-white
+              focus:ring-2
+              focus:ring-[#666666]/10
+              ${
+                errors.name
+                  ? "border-red-400"
+                  : "border-[#d4d4d4] focus:border-[#666666]"
+              }
+            `}
+          />
+
+          {errors.name && (
+            <p className="mt-1 text-left text-[11px] text-red-500">
+              {errors.name}
+            </p>
+          )}
+        </div>
+
+        {/* Mobile Number */}
+        <div>
+          <label
+            htmlFor="enquiry-phone"
+            className="mb-1.5 block text-left text-[18px] font-semibold text-[#444444]"
+          >
+            Mobile Number
+          </label>
+
+          <div className="relative">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[13px] font-medium text-[#666666]">
+              +91
+            </span>
+
+            <input
+              id="enquiry-phone"
+              name="phone"
+              type="tel"
+              value={formData.phone}
+              onChange={handlePhoneChange}
+              placeholder="10-digit mobile number"
+              autoComplete="tel"
+              inputMode="numeric"
+              maxLength={10}
+              className={`
+                h-12
+                w-full
+                rounded-[10px]
+                border
+                bg-[#fafafa]
+                pl-12.5
+                pr-4
+                text-[13px]
+                text-[#333333]
+                outline-none
+                transition-all
+                placeholder:text-[#999999]
+                focus:bg-white
+                focus:ring-2
+                focus:ring-[#666666]/10
+                ${
+                  errors.phone
+                    ? "border-red-400"
+                    : "border-[#d4d4d4] focus:border-[#666666]"
+                }
+              `}
+            />
+          </div>
+
+          {errors.phone && (
+            <p className="mt-1 text-left text-[11px] text-red-500">
+              {errors.phone}
+            </p>
+          )}
+        </div>
+
+        {/* Email */}
+        <div className="sm:col-span-2">
+          <label
+            htmlFor="enquiry-email"
+            className="mb-1.5 block text-left text-[18px] font-semibold text-[#444444]"
+          >
+            Email Address
+            <span className="ml-1 font-normal text-[#999999]">
+              (Optional)
+            </span>
+          </label>
+
+          <input
+            id="enquiry-email"
+            name="email"
+            type="email"
+            value={formData.email}
+            onChange={handleEmailChange}
+            placeholder="Enter your email address"
+            autoComplete="email"
+            className={`
+              h-12
+              w-full
+              rounded-[10px]
+              border
+              bg-[#fafafa]
+              px-4
+              text-[13px]
+              text-[#333333]
+              outline-none
+              transition-all
+              placeholder:text-[#999999]
+              focus:bg-white
+              focus:ring-2
+              focus:ring-[#666666]/10
+              ${
+                errors.email
+                  ? "border-red-400"
+                  : "border-[#d4d4d4] focus:border-[#666666]"
+              }
+            `}
+          />
+
+          {errors.email && (
+            <p className="mt-1 text-left text-[11px] text-red-500">
+              {errors.email}
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* Buttons */}
+      <div className="mt-7 flex justify-center gap-3">
+        <button
+          type="button"
+          disabled={isSubmitting}
+          onClick={() => setStep(1)}
+          className="
+            flex
+            h-11.5
+            min-w-25
+            items-center
+            justify-center
+            rounded-[10px]
+            border
+            border-[#333333]
+            bg-white
+            px-5
+            text-[11px]
+            font-bold
+            tracking-[0.08em]
+            text-[#333333]
+            transition-all
+            duration-200
+            hover:bg-[#eeeeee]
+            disabled:cursor-not-allowed
+            disabled:opacity-50
+          "
+        >
+          BACK
+        </button>
+
+        <motion.button
+          type="button"
+          disabled={!canSubmit}
+          onClick={handleSubmit}
+          whileHover={canSubmit ? { scale: 1.02 } : {}}
+          whileTap={canSubmit ? { scale: 0.98 } : {}}
+          className="
+            flex
+            h-11.5
+            min-w-37.5
+            items-center
+            justify-center
+            rounded-[10px]
+            bg-[#333333]
+            px-6
+            text-[11px]
+            font-bold
+            tracking-[0.08em]
+            text-white
+            shadow-[0_6px_18px_rgba(0,0,0,0.16)]
+            transition-all
+            duration-200
+            hover:bg-[#222222]
+            disabled:cursor-not-allowed
+            disabled:bg-[#d4d4d4]
+            disabled:text-[#777777]
+            disabled:shadow-none
+          "
+        >
+          {isSubmitting
+            ? "SUBMITTING..."
+            : download
+              ? "SUBMIT & DOWNLOAD"
+              : "SUBMIT"}
+        </motion.button>
+      </div>
+    </div>
+  </motion.div>
+)}
       </AnimatePresence>
     </div>
   );
