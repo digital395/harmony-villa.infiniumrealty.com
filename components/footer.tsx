@@ -69,9 +69,8 @@ export default function Footer() {
               </h3>
 
               <p className="mt-1.75 text-[15px] font-normal leading-6 text-white/85">
-                No. 1733/1, 2nd Floor, Trichy Rd, Olympus,
-                <br />
-                Ramanathapuram, Coimbatore - 641 045
+              Panchayat Annur, S.F. No: 5/1A1 & 6/3C, Taluk, Globus Garden, Kaikolapalayam, Vellanaipatti, Coimbatore, Tamil Nadu 641048
+              
               </p>
             </div>
 
@@ -136,7 +135,7 @@ export default function Footer() {
               </Link>
             </motion.div>
 
-            <motion.div
+            {/* <motion.div
               initial={{
                 opacity: 0,
                 y: 12,
@@ -201,7 +200,7 @@ export default function Footer() {
 
               <div className="text-left">
                 <p className="text-[13px] font-bold leading-5 text-white">
-                  RERA No: TNRERA/**/***/****/****
+                  RERA No: TNRERA
                 </p>
 
                 <a
@@ -225,7 +224,7 @@ export default function Footer() {
                   WWW.RERA.TN.GOV.IN
                 </a>
               </div>
-            </motion.div>
+            </motion.div> */}
           </motion.div>
 
           <motion.div
@@ -335,9 +334,18 @@ export default function Footer() {
         className="border-t border-white/10"
       >
         <div className="flex min-h-9.5 items-center justify-center px-4">
-          <p className="text-center text-[12px] font-normal leading-4.25 text-white/75">
-Copyright {year ?? ""} - Design by BCB          </p>
-        </div>
+  <p className="text-center text-[12px] font-normal leading-4.25 text-white/75">
+    Copyright {year ?? ""} - Design by{" "}
+    <a
+      href="https://blackcoffeebrands.co.in/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="hover:underline"
+    >
+      Black Coffee Brands
+    </a>
+  </p>
+</div>
       </motion.div>
     </footer>
   );
