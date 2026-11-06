@@ -234,7 +234,7 @@ export default function CTA() {
             priority
             sizes="
               (max-width: 639px) 100vw,
-              (max-width: 1023px) 100vw,
+              (max-width: 1400px) 100vw,
               43vw
             "
             className="
