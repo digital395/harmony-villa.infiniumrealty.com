@@ -1,17 +1,28 @@
 import { NextResponse } from "next/server";
 
-async function parseResponse(response: Response) {
+async function parseResponse(response: Response, label: string) {
   const text = await response.text();
+
+  console.log(`${label} status:`, response.status);
+  console.log(`${label} content-type:`, response.headers.get("content-type"));
+  console.log(`${label} response:`, text);
 
   if (!text) {
     return null;
   }
 
-  try {
-    return JSON.parse(text);
-  } catch {
-    return text;
+  const contentType = response.headers.get("content-type") || "";
+
+  if (contentType.includes("application/json")) {
+    try {
+      return JSON.parse(text);
+    } catch (error) {
+      console.error(`${label} JSON parse failed:`, error);
+      return text;
+    }
   }
+
+  return text;
 }
 
 export async function POST(req: Request) {
@@ -71,7 +82,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (email?.trim() && !emailRegex.test(email.trim())) {
       return NextResponse.json(
@@ -125,8 +136,10 @@ export async function POST(req: Request) {
       }),
     });
 
-    const tokenData = await parseResponse(tokenResponse);
-
+const tokenData = await parseResponse(
+  tokenResponse,
+  "Salesforce OAuth"
+);
     if (!tokenResponse.ok) {
       console.error("Salesforce OAuth failed:", {
         status: tokenResponse.status,
@@ -193,8 +206,10 @@ export async function POST(req: Request) {
       body: JSON.stringify(payload),
     });
 
-    const leadData = await parseResponse(leadResponse);
-
+const leadData = await parseResponse(
+  leadResponse,
+  "Salesforce Lead"
+);
     console.log("Salesforce status:", leadResponse.status);
     console.log("Salesforce response:", leadData);
 
@@ -231,8 +246,10 @@ export async function POST(req: Request) {
       }),
     });
 
-    const sheetData = await parseResponse(sheetResponse);
-
+const sheetData = await parseResponse(
+  sheetResponse,
+  "Google Sheet"
+);
     console.log("Google Sheet status:", sheetResponse.status);
     console.log("Google Sheet response:", sheetData);
 
