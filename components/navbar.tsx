@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import Popup from "./popup";
+import { usePathname, useRouter } from "next/navigation";
 
 const navItems = [
   { label: "About", id: "about" },
@@ -86,6 +87,9 @@ const easeOut = [0.16, 1, 0.3, 1] as const;
 // };
 
 export default function Navbar() {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [enquireOpen, setEnquireOpen] = useState(false);
@@ -118,9 +122,28 @@ export default function Navbar() {
     };
   }, [menuOpen]);
 
-  const handleNavClick = () => {
-    setMenuOpen(false);
-  };
+const handleNavClick = (
+  e: React.MouseEvent<HTMLAnchorElement>,
+  id: string
+) => {
+  e.preventDefault();
+  setMenuOpen(false);
+
+  if (pathname === "/") {
+    const section = document.getElementById(id);
+
+    if (section) {
+      section.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+
+    return;
+  }
+
+  router.push(`/#${id}`);
+};
 
   const handleEnquireOpen = () => {
     setMenuOpen(false);
@@ -165,10 +188,10 @@ export default function Navbar() {
               xl:px-9
             "
           >
-            <Link
-              href="/"
-              aria-label="Harmony Home"
-              onClick={handleNavClick}
+           <Link
+  href="/"
+  aria-label="Harmony Home"
+  onClick={() => setMenuOpen(false)}
               className="relative z-20 flex shrink-0 items-center"
             >
               <motion.div
@@ -195,10 +218,10 @@ export default function Navbar() {
             <div className="hidden items-center lg:flex">
               <div className="flex items-center gap-1 xl:gap-2">
                 {navItems.map((item) => (
-                  <Link
-                    key={item.id}
-                    href={`#${item.id}`}
-                    onClick={handleNavClick}
+                <Link
+  key={item.id}
+  href={`/#${item.id}`}
+  onClick={(e) => handleNavClick(e, item.id)}
                     className={`
                       group relative
                       rounded-full
