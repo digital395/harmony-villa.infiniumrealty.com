@@ -291,7 +291,7 @@ export default function AboutHarmony() {
       </motion.div>
 
       {/* ================= CTA ================= */}
-      <motion.button
+      {/* <motion.button
         type="button"
         onClick={handleBrochureClick}
         className="
@@ -348,7 +348,7 @@ export default function AboutHarmony() {
         }}
       >
         DOWNLOAD BROCHURE
-      </motion.button>
+      </motion.button> */}
     </motion.div>
   </div>
 </section>

@@ -870,8 +870,8 @@ lg:order-2
       <Popup
         isOpen={showPopup}
         onClose={() => setShowPopup(false)}
-        title="Download Brochure"
-        download={true}
+        title="Book a Site Visit"
+        download={false}
       />
     </>
   );

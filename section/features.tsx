@@ -274,7 +274,7 @@ lg:items-stretch
 
           {/* DOWNLOAD BUTTON */}
 
-          <motion.button
+          {/* <motion.button
             type="button"
             onClick={handleBrochureClick}
             initial={{
@@ -330,7 +330,7 @@ lg:items-stretch
             "
           >
             DOWNLOAD BROCHURE
-          </motion.button>
+          </motion.button> */}
         </motion.div>
 
         {/* =========================================================

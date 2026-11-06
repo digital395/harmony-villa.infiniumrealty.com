@@ -537,7 +537,8 @@ className="
     {/* CTA */}
     <motion.button
       type="button"
-      onClick={handlePriceClick}
+      // onClick={handlePriceClick}
+onClick={() => setIsPopupOpen(true)}
       whileHover={{
         backgroundColor: "#252525",
       }}
@@ -581,7 +582,7 @@ className="
         isOpen={isPopupOpen}
         onClose={() => setIsPopupOpen(false)}
         title="Get Price & Floor Plan"
-        download={true}
+        download={false}
       />
     </section>
   );
